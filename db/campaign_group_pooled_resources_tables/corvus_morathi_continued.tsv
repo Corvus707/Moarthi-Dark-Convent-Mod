@@ -1,0 +1,4 @@
+campaign_group	resource	initial_amount
+#campaign_group_pooled_resources_tables;1;db/campaign_group_pooled_resources_tables/corvus_morathi_continued		
+corv_morathi_ritual_feature	morathi_manipulation	100
+corv_morathi_ritual_feature	morathi_concealment	20

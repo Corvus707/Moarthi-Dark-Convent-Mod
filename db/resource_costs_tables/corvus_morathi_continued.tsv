@@ -1,0 +1,10 @@
+id	treasury_cost	expenditure_type	income_type	expenditure_type_when_regular	income_type_when_regular
+#resource_costs_tables;0;db/resource_costs_tables/corvus_morathi_continued					
+morathi_actions_manipulation_100	0	RITUAL	RITUAL	ARMY_UPKEEP	BACKGROUND_INCOME
+morathi_actions_manipulation_150	0	RITUAL	RITUAL	ARMY_UPKEEP	BACKGROUND_INCOME
+morathi_actions_manipulation_200	0	RITUAL	RITUAL	ARMY_UPKEEP	BACKGROUND_INCOME
+morathi_actions_manipulation_300	0	RITUAL	RITUAL	ARMY_UPKEEP	BACKGROUND_INCOME
+morathi_actions_manipulation_400	0	RITUAL	RITUAL	ARMY_UPKEEP	BACKGROUND_INCOME
+morathi_actions_manipulation_50	0	RITUAL	RITUAL	ARMY_UPKEEP	BACKGROUND_INCOME
+morathi_actions_manipulation_500	0	RITUAL	RITUAL	ARMY_UPKEEP	BACKGROUND_INCOME
+morathi_actions_manipulation_800	0	RITUAL	RITUAL	ARMY_UPKEEP	BACKGROUND_INCOME

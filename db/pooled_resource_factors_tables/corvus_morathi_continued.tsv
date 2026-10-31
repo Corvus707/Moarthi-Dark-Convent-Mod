@@ -1,0 +1,8 @@
+key	is_hidden
+#pooled_resource_factors_tables;5;db/pooled_resource_factors_tables/corvus_morathi_continued	
+morathi_concealment_covens_negative	false
+morathi_concealment_covens_positive	false
+morathi_concealment_web_of_power	false
+morathi_manipulation_covens_negative	false
+morathi_manipulation_covens_positive	false
+morathi_manipulation_web_of_power	false
