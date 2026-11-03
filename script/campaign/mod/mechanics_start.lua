@@ -15,10 +15,6 @@ local function get_panel()
     return find_uicomponent(core:get_ui_root(), panel_name)
 end
 
-local function get_ritual_holder()
-    return find_uicomponent(core:get_ui_root(), panel_name, "right_section", "ritual_holder")
-end
-
 local function get_button()
     return find_uicomponent(core:get_ui_root(), "hud_campaign", "faction_buttons_docker", "button_group_management", button_name)
 end
@@ -36,11 +32,7 @@ local function set_button_selected(selected)
 end
 
 local function close_panel()
-    -- Hiding the ritual holder directly fires its on_hide callback, which turns off map targeting
-    local ritual_holder = get_ritual_holder()
-    if ritual_holder then
-        ritual_holder:SetVisible(false)
-    end
+    -- Hiding the panel fires its on_hide callback, which turns off map targeting
     local panel = get_panel()
     if panel then
         panel:SetVisible(false)
@@ -56,10 +48,6 @@ local function open_panel()
         panel = UIComponent(core:get_ui_root():CreateComponent(panel_name, panel_layout))
     end
     panel:SetVisible(true)
-    local ritual_holder = get_ritual_holder()
-    if ritual_holder then
-        ritual_holder:SetVisible(true)
-    end
     set_button_selected(true)
     cm:steal_escape_key_with_callback(escape_key_name, close_panel)
 end
