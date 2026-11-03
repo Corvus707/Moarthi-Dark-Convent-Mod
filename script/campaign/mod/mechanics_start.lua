@@ -7,8 +7,16 @@ local button_icon = "ui/skins/default/icon_gift_of_slaanesh.png"
 local button_tooltip = "Morathi||Open Morathi's panel."
 local escape_key_name = "corvus_morathi_panel_escape"
 
+-- Vanilla panels that may open alongside ours without closing it (e.g. while picking a ritual target)
+local panels_allowed_alongside = {
+}
+
 local function get_panel()
     return find_uicomponent(core:get_ui_root(), panel_name)
+end
+
+local function get_ritual_holder()
+    return find_uicomponent(core:get_ui_root(), panel_name, "right_section", "ritual_holder")
 end
 
 local function get_button()
@@ -28,6 +36,11 @@ local function set_button_selected(selected)
 end
 
 local function close_panel()
+    -- Hiding the ritual holder directly fires its on_hide callback, which turns off map targeting
+    local ritual_holder = get_ritual_holder()
+    if ritual_holder then
+        ritual_holder:SetVisible(false)
+    end
     local panel = get_panel()
     if panel then
         panel:SetVisible(false)
@@ -43,6 +56,10 @@ local function open_panel()
         panel = UIComponent(core:get_ui_root():CreateComponent(panel_name, panel_layout))
     end
     panel:SetVisible(true)
+    local ritual_holder = get_ritual_holder()
+    if ritual_holder then
+        ritual_holder:SetVisible(true)
+    end
     set_button_selected(true)
     cm:steal_escape_key_with_callback(escape_key_name, close_panel)
 end
@@ -113,13 +130,15 @@ cm:add_first_tick_callback(function ()
         close_panel,
         true)
 
-    -- Close when a vanilla panel (diplomacy, technology, etc.) opens over it
     core:add_listener(
         "corvus_morathi_panel_other_panel_opened",
         "PanelOpenedCampaign",
         function (context)
-            return context.string ~= panel_name and is_panel_open()
+            return context.string ~= panel_name and not panels_allowed_alongside[context.string] and is_panel_open()
         end,
-        close_panel,
+        function (context)
+            out("Closing "..panel_name.." because "..context.string.." opened")
+            close_panel()
+        end,
         true)
 end)
