@@ -6,7 +6,7 @@ local button_holder_name = "corvus_morathi_court_button_holder"
 local button_holder_layout = "ui/campaign ui/corvus_morathi_court_button"
 local button_name = "button_corvus_morathi_court"
 local button_icon = "ui/skins/default/icon_gift_of_slaanesh.png"
-local button_tooltip = "Morathi's Court||Open Morathi's Court."
+local button_tooltip = "The Dark Convent||Enter the Dark Convent to train spellcasters and acquire character traits."
 local escape_key_name = "corvus_morathi_court_escape"
 
 -- Top-level UI (HUD, other panels) hidden while the court is open, restored on close
@@ -57,11 +57,32 @@ local function restore_other_ui()
     hidden_components = {}
 end
 
+-- The zoomed-out map overlay menu is recreated by the game, so hiding it once isn't enough.
+-- Its contents only show while this script value is 0.
+local function set_spacebar_options_disabled(disabled)
+    local ok, err = pcall(common.set_context_value, "disable_campaign_spacebar_options", disabled and 1 or 0)
+    if not ok then
+        out("Could not set disable_campaign_spacebar_options: "..tostring(err))
+    end
+end
+
+-- The layout's dark backdrop is 1600x900; stretch it over the whole screen (inner panel stays centred)
+local function fit_to_screen(panel)
+    local width, height = core:get_ui_root():Dimensions()
+    panel:SetCanResizeWidth(true)
+    panel:SetCanResizeHeight(true)
+    panel:Resize(width, height, false)
+    panel:SetCanResizeWidth(false)
+    panel:SetCanResizeHeight(false)
+end
+
 local function close_panel()
     local panel = get_panel()
     if panel then
+        panel:RemoveTopMost()
         panel:SetVisible(false)
     end
+    set_spacebar_options_disabled(false)
     restore_other_ui()
     set_button_selected(false)
     cm:release_escape_key_with_callback(escape_key_name)
@@ -74,7 +95,11 @@ local function open_panel()
         panel = UIComponent(core:get_ui_root():CreateComponent(panel_name, panel_layout))
     end
     hide_other_ui()
+    set_spacebar_options_disabled(true)
+    fit_to_screen(panel)
     panel:SetVisible(true)
+    -- Above map labels and anything the game shows later, like the vanilla full-screen panels
+    panel:RegisterTopMost()
     set_button_selected(true)
     cm:steal_escape_key_with_callback(escape_key_name, close_panel)
 end

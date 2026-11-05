@@ -4,7 +4,7 @@ local panel_name = "corvus_morathi_panel"
 local panel_layout = "ui/campaign ui/corvus_morathi_panel"
 local button_name = "button_corvus_morathi_panel"
 local button_icon = "ui/skins/default/icon_gift_of_slaanesh.png"
-local button_tooltip = "Morathi||Open Morathi's panel."
+local button_tooltip = "Cult of Pleasure||Seduce enemies or manipulate the winds of magic to your advantage."
 local escape_key_name = "corvus_morathi_panel_escape"
 
 -- Vanilla panels that may open alongside ours without closing it (e.g. while picking a ritual target)
